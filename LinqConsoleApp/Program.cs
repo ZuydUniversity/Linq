@@ -1,5 +1,5 @@
-﻿using Linq.Database;
-using Linq.Models;
+﻿using LinqConsoleApp.Database;
+using LinqConsoleApp.Models;
 
 namespace Linq
 {

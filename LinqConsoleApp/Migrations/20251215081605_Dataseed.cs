@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace Linq.Migrations
+namespace LinqConsoleApp.Migrations
 {
     /// <inheritdoc />
     public partial class Dataseed : Migration

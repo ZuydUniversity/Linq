@@ -1,4 +1,4 @@
-﻿using Linq.Models;
+﻿using LinqConsoleApp.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Linq.Database
+namespace LinqConsoleApp.Database
 {
     public class VoorbeeldDBContext : DbContext
     {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Linq.Migrations
+namespace LinqConsoleApp.Migrations
 {
     /// <inheritdoc />
     public partial class CreateDb : Migration
