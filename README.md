@@ -1,4 +1,4 @@
-# LINQ Oefenproject
+﻿# LINQ Oefenproject
 
 ## Over dit project
 
@@ -19,11 +19,11 @@ Het project gebruikt een SQL Server database met twee hoofdtabellen:
 2. Pas indien nodig de connection string aan in `VoorbeeldDBContext.cs`
 3. Voer de migraties uit in package manager console:
 
-update-database
+   update-database
 
+    
 ## Naslag
-Zie : https://learn.microsoft.com/en-us/ef/core/querying/
-
+Zie: [Entity Framework Core Querying](https://learn.microsoft.com/en-us/ef/core/querying/)
 
 ## LINQ Oefeningen
 
@@ -92,8 +92,6 @@ Haal alle voorbeelden op waarvan de Description het woord "query" bevat (case-in
 ### Oefening 21: Complex query
 Haal alle voorbeelden op met Role `Administrator` of `SuperAdministrator`, sorteer op Count (aflopend), en include de uitwerkingen waarvan Tries groter is dan 5.
 
-
-
 ## Tips
 
 - Gebruik `using` statement voor je DbContext
@@ -108,4 +106,44 @@ Haal alle voorbeelden op met Role `Administrator` of `SuperAdministrator`, sorte
 - SQL Server
 - C# 13.0
 
+## Uitleg VoorbeeldWebAPI
 
+Dit hoofdstuk beschrijft hoe de Web API is gemaakt op basis van de bestaande console applicatie.
+
+### Stap 1: Web API project aanmaken
+1. Voeg een nieuw ASP.NET Core Web API project toe aan de solution.
+2. Selecteer .NET 9 als framework.
+3. Voeg een projectreferentie toe naar het Linq project (voor Models en Database).
+
+### Stap 2: Database configureren in Program.cs
+Voeg de DbContext toe aan de dependencyinjection container:
+
+builder.Services.AddDbContext<VoorbeeldDBContext>();
+
+### Stap 3: Controller aanpassen
+In de `VoorbeeldenController.cs`:
+- Gebruik `.Include(v => v.Uitwerkingen)` om gerelateerde data op te halen.
+- Vervang `.FindAsync()` door `.FirstOrDefaultAsync()` wanneer je Include gebruikt:
+
+```csharp
+var voorbeeld = await _context.Voorbeelden
+    .Include(v => v.Uitwerkingen)
+    .FirstOrDefaultAsync(v => v.Id == id);
+```
+
+**Let op**: `.FindAsync()` werkt niet samen met `.Include()`!
+
+### Stap 4: Circular reference handling
+Voorkom JSON serialization errors door `ReferenceHandler.IgnoreCycles` toe te voegen in `Program.cs`:
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
+Dit voorkomt oneindige loops bij het serialiseren van `Voorbeeld` ↔ `Uitwerking` relaties.
+
+### API endpoints
+- `GET /api/Voorbeelden` - Alle voorbeelden
+- `GET /api/Voorbeelden/{id}` - Specifiek voorbeeld met uitwerkingen
