@@ -43,9 +43,8 @@ classDiagram
         SuperAdministrator
     }
 
-    Voorbeeld "1" --> "0..*" Uitwerking : Uitwerkingen
-    Uitwerking "0..*" --> "0..1" Voorbeeld : VoorbeeldId
-    Voorbeeld --> Role
+    Voorbeeld "1" -- "0..*" Uitwerking : Uitwerkingen
+    Voorbeeld -- Role
 ```
 
 ## Setup
