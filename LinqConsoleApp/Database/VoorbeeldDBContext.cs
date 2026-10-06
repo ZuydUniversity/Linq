@@ -11,6 +11,7 @@ namespace LinqConsoleApp.Database
 {
     public class VoorbeeldDBContext : DbContext
     {
+        // Connection string to the SQL Server database in case of a local SQL Server instance in Docker. 
         private readonly string _connectionString = "Data Source=.;Initial Catalog=VoorbeelDbLinq;Persist Security Info=True;User ID=sa;Password=DevPassword123!;Trust Server Certificate=True";
 
         public DbSet<Voorbeeld> Voorbeelden { get; set; }
