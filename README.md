@@ -43,7 +43,7 @@ classDiagram
         SuperAdministrator
     }
 
-    Voorbeeld "1" -- "0..*" Uitwerking : Uitwerkingen
+    Voorbeeld "1" -- "0..*" Uitwerking
     Voorbeeld -- Role
 ```
 
