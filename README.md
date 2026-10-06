@@ -2,7 +2,7 @@
 
 ## Over dit project
 
-Dit project is een oefenomgeving voor het leren van LINQ (Language Integrated Query) en Entity Framework Core in .NET 9. Het bevat een database met voorbeelden van LINQ-queries en uitwerkingen van studenten.
+Dit project is een oefenomgeving voor het leren van LINQ (Language Integrated Query) en Entity Framework Core in .NET 10. Het bevat een database met voorbeelden van LINQ-queries en uitwerkingen van studenten.
 
 ## Database structuur
 
@@ -12,6 +12,41 @@ Het project gebruikt een SQL Server database met twee hoofdtabellen:
   - Id, Name, Description, Count, Role
 - **Uitwerkingen**: Bevat 200 uitwerkingen van studenten
   - Id, Owner, Tries, VoorbeeldId (relatie naar Voorbeeld)
+
+### Class diagram
+
+```mermaid
+classDiagram
+    class Voorbeeld {
+        +int Id
+        +string Name
+        +string Description
+        +int Count
+        +Role Role
+        +ICollection~Uitwerking~ Uitwerkingen
+    }
+
+    class Uitwerking {
+        +int Id
+        +string Owner
+        +int Tries
+        +int? VoorbeeldId
+        +Voorbeeld? Voorbeeld
+    }
+
+    class Role {
+        <<enumeration>>
+        Guest
+        User
+        Moderator
+        Administrator
+        SuperAdministrator
+    }
+
+    Voorbeeld "1" --> "0..*" Uitwerking : Uitwerkingen
+    Uitwerking "0..*" --> "0..1" Voorbeeld : VoorbeeldId
+    Voorbeeld --> Role
+```
 
 ## Setup
 
@@ -101,11 +136,6 @@ Haal alle voorbeelden op met Role `Administrator` of `SuperAdministrator`, sorte
 - Console.WriteLine of breakpoints gebruiken om resultaten te inspecteren
 - Gebruik LINQ method syntax of query syntax (beide zijn geldig)
 
-## Technologie
 
-- .NET 9
-- Entity Framework Core
-- SQL Server
-- C# 13.0
 
 
